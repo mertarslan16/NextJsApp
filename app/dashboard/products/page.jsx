@@ -3,8 +3,14 @@ import styles from "../../ui/dashboard/products/products.module.css"
 import Pagination from "@/app/ui/dashboard/pagination/pagination"
 import Search from "@/app/ui/dashboard/search/search"
 import Image from "next/image"
+import { fetchProducts } from "@/app/lib/data"
 
-const ProductsPage = () => {
+const ProductsPage = async ({searchParams}) => {
+  const q = searchParams?.q || "";
+  const page = searchParams?.page || 1;
+
+  const {count,products} = await fetchProducts(q,page);
+
     return (
       <div className={styles.container}>
         <div className={styles.container}>
@@ -16,6 +22,7 @@ const ProductsPage = () => {
       </div>
       <table className={styles.table}>
         <thead>
+         
           <tr>
             <td>Title</td>
             <td>Description</td>
@@ -26,63 +33,37 @@ const ProductsPage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image src="/noproduct.jpg"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className={styles.userImage}
-                />
-                İphone
-              </div>
-            </td>
-            <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, qui.</td>
-            <td>$1000</td>
-            <td>Oct 29 2023</td>
-            <td>35</td>
-            <td>
-              <div className={styles.buttons}>
-                <Link href="/dashboard/products/test">
-                  <button className={`${styles.button} ${styles.view}`}>View</button>
-                </Link>
-                <Link href="/">
-                  <button className={`${styles.button} ${styles.delete}`}>Delete</button>
-                </Link>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div className={styles.user}>
-                <Image src="/noproduct.jpg"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className={styles.userImage}
-                />
-                İphone
-              </div>
-            </td>
-            <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, qui.</td>
-            <td>$1000</td>
-            <td>Oct 29 2023</td>
-            <td>35</td>
-            <td>
-              <div className={styles.buttons}>
-                <Link href="/">
-                  <button className={`${styles.button} ${styles.view}`}>View</button>
-                </Link>
-                <Link href="/">
-                  <button className={`${styles.button} ${styles.delete}`}>Delete</button>
-                </Link>
-              </div>
-            </td>
-          </tr>
+         {products.map((product)=>(
+          <tr key={product.id}>
+             <td>
+               <div className={styles.user}>
+                 <Image src= {product.img || "/noproduct.jpg" }
+                   alt=""
+                   width={40}
+                   height={40}
+                   className={styles.userImage} />
+                 {product.title}
+               </div>
+             </td>
+             <td>{product.desc}</td>
+             <td>{product.price}$</td>
+             <td>{product.createdAt?.toString().slice(4,16)}</td>
+             <td>{product.stock}</td>
+             <td>
+               <div className={styles.buttons}>
+                 <Link href={`/dashboard/products/${product.id}`}>
+                   <button className={`${styles.button} ${styles.view}`}>View</button>
+                 </Link>
+                 <Link href="/">
+                   <button className={`${styles.button} ${styles.delete}`}>Delete</button>
+                 </Link>
+               </div>
+             </td>
+           </tr>
+          ))}
         </tbody>
       </table>
-      <Pagination/>
+      <Pagination count={count}/>
     </div>
       </div>
     )

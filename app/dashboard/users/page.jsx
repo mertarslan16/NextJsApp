@@ -6,9 +6,13 @@ import Pagination from "@/app/ui/dashboard/pagination/pagination"
 import { fetchUsers } from "@/app/lib/data"
 
 
-const UsersPage = async () => {
+const UsersPage = async ({searchParams}) => {
 
-  const users = await fetchUsers();
+  const q = searchParams?.q || "";
+  const page = searchParams?.page || 1;
+
+  const {count,users} = await fetchUsers(q,page);
+  
   return (
     <div className={styles.container}> 
       <div className={styles.top}>
@@ -60,7 +64,7 @@ const UsersPage = async () => {
           ))}
         </tbody>
       </table>
-      <Pagination/>
+      <Pagination count={count} />
     </div>
   )
 }
