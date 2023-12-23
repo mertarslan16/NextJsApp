@@ -1,10 +1,16 @@
-import Link from "next/link"
+import AboutUs from "./components/AboutUs/page"
+import Description from "./components/Description/page"
+import ProductHome from "./components/Product/page"
+import Slider from "./components/Slider/page"
+import styles from "./homepage.module.css"
 
 const Homepage = () => {
   return (
-    <div>
-      <Link  href="/login" >Login Page</Link> 
-      <Link href="/dashboard" >Dashboard</Link> 
+    <div className={styles.container}>
+      <Slider />
+      <AboutUs />
+      <Description />
+      <ProductHome />
     </div>
   )
 }

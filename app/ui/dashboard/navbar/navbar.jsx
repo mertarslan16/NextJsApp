@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation"
 import styles from "../navbar/navbar.module.css"
 import { MdNotifications, MdOutlineChat, MdPublic, MdSearch } from "react-icons/md";
+import Link from "next/link";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -9,6 +10,11 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>{pathname.split("/").pop()}</div>
+      <div>
+        <Link href="/"> 
+          <button>Home</button> 
+          </Link>
+        </div>
       <div className={styles.menu}>
         <div className={styles.search}>
           <MdSearch/>

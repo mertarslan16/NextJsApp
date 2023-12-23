@@ -13,7 +13,6 @@ import {
 } from "react-icons/md"
 import MenuLink from "./menuLink/menuLink"
 import Image from "next/image"
-import NoAvatar from "@/public/noavatar.png"
 import { auth, signOut } from "@/app/auth"
 const menuItems = [
   {
