@@ -1,0 +1,14 @@
+.description{
+    margin-top: 50px;
+    background-image: url("../../../public/background.jpeg");
+    background-size: cover ;
+    padding: 250px; 
+    background-attachment: fixed;
+}
+
+.description p{
+    background-color: rgba(255, 255, 255, 0.7); /* Opsiyonel: Metni okunabilir hale getirmek için bir arka plan rengi ekleyebilirsiniz */
+    padding: 10px;
+    
+}
+
